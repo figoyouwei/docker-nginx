@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx-mac
+    ports:
+      - "80:80"      # Maps host port 80 to container port 80
+      - "443:443"    # Maps host port 443 to container port 443 (for HTTPS)
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro     # Mount custom nginx configuration
+      - ./html:/usr/share/nginx/html:ro           # Mount static content
+    restart: unless-stopped
+    networks:
+      - nginx-network
+
+networks:
+  nginx-network:
+    driver: bridge
