@@ -1,4 +1,5 @@
-version: '3'
+version: '3.8'
+name: sonoma
 
 services:
   nginx:
@@ -20,4 +21,4 @@ services:
 
 networks:
   default:
-    name: taipy-app-network
+    name: sonoma-network
