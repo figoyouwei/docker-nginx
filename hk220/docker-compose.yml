@@ -12,6 +12,13 @@ services:
       - ./html:/usr/share/nginx/html
       - ./ssl/www.docker-registry.asia.crt:/etc/nginx/ssl/www.docker-registry.asia.crt
       - ./ssl/www.docker-registry.asia.key:/etc/nginx/ssl/www.docker-registry.asia.key
+    depends_on:
+      - registry
+
+  registry:
+    container_name: docker-registry-v2
+    image: registry:2
+    restart: always
 
 networks:
   default:
