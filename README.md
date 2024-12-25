@@ -15,11 +15,6 @@ docker compose -f compose-hk220.yml up -d
 
 - Verify hk220 nginx
 ```
-curl http://43.129.80.220
-```
-
-
-- Copy config from base container and edit with sudo or create another file
-```
-sudo docker cp nginx-mac:/etc/nginx/nginx.conf ./nginx.conf
+curl 43.129.80.220
+curl www.docker-registry.asia
 ```
