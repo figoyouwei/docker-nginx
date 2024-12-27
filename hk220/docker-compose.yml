@@ -5,15 +5,17 @@ services:
     image: nginx:latest
     container_name: nginx-service
     ports:
-      - "80:80"
+      - "43.129.80.220:80:80"
       - "443:443"
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - ./html:/usr/share/nginx/html
       - ./ssl/www.docker-registry.asia.crt:/etc/nginx/ssl/www.docker-registry.asia.crt
       - ./ssl/www.docker-registry.asia.key:/etc/nginx/ssl/www.docker-registry.asia.key
     depends_on:
       - registry
+    networks:
+      - registry_network
 
   registry:
     container_name: registry-service
@@ -27,7 +29,9 @@ services:
     volumes:
       - ./config.yml:/etc/docker/registry/config.yml
       - ./storage:/var/lib/registry
+    networks:
+      - registry_network
 
 networks:
-  default:
-    name: hk220-network
+  registry_network:
+    driver: bridge
