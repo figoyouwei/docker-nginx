@@ -1,0 +1,37 @@
+name: hk220  
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx-service
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./html:/usr/share/nginx/html
+      - ./ssl/www.docker-registry.online.crt:/etc/nginx/ssl/www.docker-registry.online.crt
+      - ./ssl/www.docker-registry.online.key:/etc/nginx/ssl/www.docker-registry.online.key
+    depends_on:
+      - registry
+    networks:
+      - registry_network
+
+  registry:
+    container_name: registry-service
+    image: registry:2
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /var/lib/registry
+      REGISTRY_HTTP_ADDR: "0.0.0.0:5000"
+    volumes:
+      - ./config.yml:/etc/docker/registry/config.yml
+      - ./storage:/var/lib/registry
+    networks:
+      - registry_network
+
+networks:
+  registry_network:
+    driver: bridge
