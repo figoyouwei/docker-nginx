@@ -3,7 +3,7 @@ name: sh132
 services:
   nginx:
     image: nginx:latest
-    container_name: nginx-service
+    container_name: nginx-service-shanghai
     ports:
       - "80:80"
       - "443:443"
@@ -18,7 +18,7 @@ services:
       - registry_network
 
   registry:
-    container_name: registry-service
+    container_name: registry-service-shanghai
     image: registry:2
     restart: always
     ports:
@@ -28,7 +28,7 @@ services:
       REGISTRY_HTTP_ADDR: "0.0.0.0:5000"
     volumes:
       - ./config.yml:/etc/docker/registry/config.yml
-      - ./storage:/var/lib/registry
+      - /home/ubuntu/GitHub/docker-nginx/storage:/var/lib/registry
     networks:
       - registry_network
 
